@@ -1,4 +1,5 @@
-const http = require('http');
+const express = require('express');
+const app=express();
 
 const notes = [
   { id: '1', title: 'hello', body: 'world', important: true },
@@ -10,11 +11,17 @@ const notes = [
   { id: '7', title: 'backend using node.js', body: 'Important note about backend', important: false }
 ];
 
-const app = http.createServer((request, response) => {
-  response.writeHead(200, { 'Content-Type': 'application/json' });
-  response.end(JSON.stringify(notes));
+//setting end point:
+app.get('/', (req,res)=>{
+  res.send("api request"); 
+});
+//to get all the notes end point:
+app.get('/api/notes', (req,res)=>{
+  res.json(notes); 
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT);
-console.log(`Listening on port ${PORT}`);
+
+const PORT =3001;
+app.listen(PORT,()=>{
+  console.log(`Server is running on port ${PORT}`);
+});
